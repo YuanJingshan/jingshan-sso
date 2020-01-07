@@ -1,0 +1,75 @@
+sso-server: http://localhost:8080/sso
+
+#sso
+server:
+  port: 8081
+  servlet:
+    context-path: /auth
+security:
+  oauth2:
+    client:
+      client-id: app_auth
+      client-secret: user123
+      access-token-uri: ${sso-server}/oauth/token
+      user-authorization-uri: ${sso-server}/oauth/authorize
+    resource:
+      jwt:
+        key-uri: ${sso-server}/oauth/token_key
+
+spring:
+  http.encoding.force: true
+  http.encoding.charset: UTF-8
+  http.encoding.enabled: true
+  #mysql
+  datasource:
+    url: jdbc:mysql://192.168.132.128:3306/sso_db
+    username: root
+    password: Up123*up
+    driver-class: com.mysql.jdbc.Driver
+    #druidpool
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化大小，最小，最大
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    #配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 1 from dual
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    #打开PSCache，并且指定每个连接PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    #配置监控统计拦截的filters，去掉后监控界面sql将无法统计,'wall'用于防火墙
+    filters: stat, wall, log4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  #redis
+  redis:
+    pool:
+      jedis:
+        max-idle: 10
+        min-idle: 5
+      max-total: 20
+    host: 127.fontawesome.fontawesome.1
+    password: 123456
+    port: 6379
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.up.jingshan.sso.mybatis
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#log
+logging:
+  pattern:
+    console: "%d - %p - %t %c- %m%n"
+  file: logs/log.txt
+  level.com.up.faq: debug

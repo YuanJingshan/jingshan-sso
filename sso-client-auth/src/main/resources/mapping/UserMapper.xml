@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.up.jingshan.sso.mybatis.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.up.jingshan.sso.mybatis.model.User">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="username" jdbcType="VARCHAR" property="username"/>
+        <result column="password" jdbcType="VARCHAR" property="password"/>
+        <result column="nickname" jdbcType="VARCHAR" property="nickname"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <collection property="roles" column="id"
+                    ofType="com.up.jingshan.sso.mybatis.mapper.RoleMapper.BaseResultMap"
+                    select="com.up.jingshan.sso.mybatis.mapper.UserRoleMapper.selectRoleByUserId" />
+    </resultMap>
+
+    <resultMap id="UserRolePermissionResultMap" type="com.up.jingshan.sso.mybatis.model.User" extends="BaseResultMap">
+        <collection property="roles" ofType="com.up.jingshan.sso.mybatis.model.Role">
+            <id column="r_id" jdbcType="INTEGER" property="id"/>
+            <result column="r_roleName" jdbcType="VARCHAR" property="roleName"/>
+            <result column="r_roleCode" jdbcType="VARCHAR" property="roleCode"/>
+            <result column="r_roleDescription" jdbcType="VARCHAR" property="roleDescription"/>
+            <result column="r_createUser" jdbcType="VARCHAR" property="createUser"/>
+            <result column="r_createTime" jdbcType="TIMESTAMP" property="createTime"/>
+            <result column="r_updateUser" jdbcType="VARCHAR" property="updateUser"/>
+            <result column="r_updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+            <collection property="permissions" ofType="com.up.jingshan.sso.mybatis.model.Permission">
+                <id column="p_id" jdbcType="INTEGER" property="id"/>
+                <result column="p_pid" jdbcType="INTEGER" property="pid"/>
+                <result column="p_type" jdbcType="TINYINT" property="type"/>
+                <result column="p_name" jdbcType="VARCHAR" property="name"/>
+                <result column="p_code" jdbcType="VARCHAR" property="code"/>
+                <result column="p_uri" jdbcType="VARCHAR" property="uri"/>
+                <result column="p_seq" jdbcType="INTEGER" property="seq"/>
+                <result column="p_createUser" jdbcType="VARCHAR" property="createUser"/>
+                <result column="p_createTime" jdbcType="TIMESTAMP" property="createTime"/>
+                <result column="p_updateUser" jdbcType="VARCHAR" property="updateUser"/>
+                <result column="p_updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
+            </collection>
+        </collection>
+    </resultMap>
+
+    <select id="selectByUsername" parameterType="java.lang.String" resultMap="UserRolePermissionResultMap">
+        select u.id, u.username, u.password, u.nickname, u.email, u.status, u.create_user, u.create_time, u.update_user, u.update_time,
+          r.id as r_id, r.role_name as r_roleName, r.role_code as r_roleCode, r.role_description as r_roleDescription,
+          r.create_user as r_createUser, r.create_time as r_createTime, r.update_user as r_updateUser, r.update_time as r_updateTime ,
+          p.id as p_id, p.pid as p_pid, p.type as p_type, p.name as p_name, p.code as p_code, p.uri as p_uri,
+          p.seq as p_seq, p.create_user as p_createUser, p.create_time as p_createTime, p.update_user as p_updateUser, p.update_time as p_updateTime
+        from sys_user u
+            left join sys_user_role ur on u.id = ur.user_id
+            left join sys_role r on ur.user_id = r.id
+            left join sys_role_permission rp on r.id = rp.role_id
+            left join sys_permission p on rp.permission_id = p.id
+        where u.username = #{userName,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.up.jingshan.sso.mybatis.model.User">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into sys_user (username, `password`, nickname,
+        email, `status`, create_user,
+        create_time, update_user, update_time
+        )
+        values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createUser,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <update id="updateByPrimaryKey" parameterType="com.up.jingshan.sso.mybatis.model.User">
+        update sys_user
+        set username    = #{username,jdbcType=VARCHAR},
+            `password`  = #{password,jdbcType=VARCHAR},
+            nickname    = #{nickname,jdbcType=VARCHAR},
+            email       = #{email,jdbcType=VARCHAR},
+            `status`    = #{status,jdbcType=TINYINT},
+            create_user = #{createUser,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_user = #{updateUser,jdbcType=VARCHAR},
+            update_time = #{updateTime,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+            id,
+            username,
+            `password`,
+            nickname,
+            email,
+            `status`,
+            create_user,
+            create_time,
+            update_user,
+            update_time
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+            id,
+            username,
+            `password`,
+            nickname,
+            email,
+            `status`,
+            create_user,
+            create_time,
+            update_user,
+            update_time
+        from sys_user
+    </select>
+
+</mapper>

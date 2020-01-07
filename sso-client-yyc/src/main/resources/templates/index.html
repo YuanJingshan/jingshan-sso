@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>中国银联-银眼查</title>
+    <link rel="shortcut icon" th:href="@{/static/img/favicon.ico}" type="image/x-icon"/>
+</head>
+
+<body>
+<h3><span th:text="${#authentication.name}"></span> | <a th:href="@{/logout}">退出</a></h3>
+<h1>欢迎来到银眼查 | <a th:href="@{/me}">看看我是谁</a> | <a th:href="@{/info}">有那些权限</a></h1>
+</body>
+</html>

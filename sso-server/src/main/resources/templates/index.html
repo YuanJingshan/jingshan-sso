@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>统一证认服务中心</title>
+    <link rel="shortcut icon" th:href="@{/static/img/favicon.ico}" type="image/x-icon"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/plugin/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" media="all"/>
+
+    <style>
+        /* 覆盖原框架样式 */
+        .layui-elem-quote {
+            background-color: inherit !important;
+        }
+    </style>
+</head>
+
+<body>
+<!-- header -->
+<div class="layui-fluid header">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12" style="margin-top: 20px;">
+            <blockquote class="layui-elem-quote">景山·统一认证服务中心</blockquote>
+        </div>
+    </div>
+</div>
+
+<!-- container -->
+<div class="container">
+    <div class="layui-row">
+        <div class="layui-col-md3">
+            <div class="layui-card" style="box-shadow: none;">
+                <!--<div class="layui-card-header">卡片面板</div>-->
+                <div class="layui-card-body">
+                    <a href="http://localhost:8081/auth/index">
+                        <img th:src="@{/img/user-auth.png}" style="border-radius: 5px; height: 100%; width: 100%;"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card" style="box-shadow: none;">
+                <!--<div class="layui-card-header">卡片面板</div>-->
+                <div class="layui-card-body">
+                    <img th:src="@{/img/user-auth.png}" style="border-radius: 5px; height: 100%; width: 100%;"/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card" style="box-shadow: none;">
+                <!--<div class="layui-card-header">卡片面板</div>-->
+                <div class="layui-card-body">
+                    <img th:src="@{/img/user-auth.png}" style="border-radius: 5px; height: 100%; width: 100%;"/>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div class="layui-card" style="box-shadow: none;">
+                <!--<div class="layui-card-header">卡片面板</div>-->
+                <div class="layui-card-body">
+                    <img th:src="@{/img/user-auth.png}" style="border-radius: 5px; height: 100%; width: 100%;"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div class="footer">
+    <div class="layui-row">
+        <div class="layui-col-sm12 layui-col-md12" style="margin-top: 20px; text-align: center;">
+            © 2019 - 景山 | 统一认证服务中心
+        </div>
+    </div>
+</div>
+</body>
+</html>

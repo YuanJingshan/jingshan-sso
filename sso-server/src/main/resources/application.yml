@@ -1,0 +1,28 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /sso
+
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.132.128:3306/sso_db
+    username: root
+    password: Up123*up
+    driver-class: com.mysql.jdbc.Driver
+  jpa:
+    show-sql: true
+  session:
+    store-type: redis
+  redis:
+    host: 127.0.0.1
+    password: 123456
+    port: 6379
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.up.jingshan.sso.mybatis
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#      lazy-loading-enabled: true
+#      aggressive-lazy-loading: false   #false 为按需加载

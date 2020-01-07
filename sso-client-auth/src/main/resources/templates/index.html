@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>中国银联-权限管理系统</title>
+    <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
+    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
+    <style>
+        html, body{
+           height:100%;
+        }
+        .layui-body, .layui-tab, .layui-tab-content, .layui-tab-item {
+            height: 100%;
+            overflow: hidden
+        }
+        .container{
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .layui-body{
+            flex: 1;
+        }
+        .left-body-container{
+            display: flex;
+            flex-direction: column;
+        }
+        .left-tab-content{
+            flex:1;
+            padding: 10px 10px 0px 10px;
+        }
+        .layui-tab-title,.layui-footer{
+           position: unset !important;
+        }
+    </style>
+</head>
+
+<body class="layui-layout-body">
+
+<div class="layui-layout layui-layout-admin container">
+    <!-- 头部 -->
+    <div class="layui-header">
+        <div class="layui-logo"><img width="150px" th:src="@{/img/logo.png}"> · 权限管理系统</div>
+
+        <ul class="layui-nav layui-layout-right">
+            <input type="hidden" th:value="${admin.id}" id="user_id"/>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img th:src="@{/img/user.png}" class="layui-nav-img">
+                    <span th:text="${admin.realName}">admin</span>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="javascript:;" id="user_info">基本资料</a></dd>
+                    <dd><a href="javascript:;" id="reset_pwd">重置密码</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a th:href="@{/logout}">退出</a></li>
+        </ul>
+    </div>
+    <div style="display:flex;flex-direction:row;flex:1;">
+        <div class="layui-side layui-bg-black">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <span th:each="prole : ${permissions}">
+                        <span th:if="${#lists.isEmpty(prole.childrens)}">
+                            <li class="layui-nav-item layui-nav-itemed">
+                                <a href="javascript:;" class="skip" th:data-url="${prole.url}" th:data-id="${prole.id}"
+                                   th:data-title="${prole.name}"><i class="layui-icon" th:html="${prole.icon}"></i><span
+                                        th:text="${prole.name}"></span></a>
+                            </li>
+                        </span>
+                        <span th:if="${not #lists.isEmpty(prole.childrens)}">
+                            <li class="layui-nav-item">
+                                <a class="" href="javascript:;">
+                                    <i class="layui-icon" th:html="${prole.icon}"></i>
+                                    <span th:text="${prole.name}"></span>
+                                </a>
+                                <dl class="layui-nav-child">
+                                    <dd th:each="crole : ${prole.childrens}">
+                                        <a href="javascript:;" class="skip" th:data-url="${crole.url}"
+                                           th:data-id="${crole.id}" th:data-title="${crole.name}">
+                                            <span th:text="${crole.name}"></span>
+                                        </a>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </span>
+                    </span>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 右边内容区域 -->
+        <div class="layui-body layui-form">
+            <div class="layui-tab layui-tab-brief left-body-container" lay-filter="demo" lay-allowClose="true">
+                <ul class="layui-tab-title">
+                    <li class="layui-this" lay-id="10">首页</li>
+                </ul>
+                <div class="layui-tab-content left-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <iframe th:src="@{/faq/home}" style="width:100%;height:100%;" scrolling="auto" frameborder="0"></iframe>
+                    </div>
+                </div>
+                <!--<div class="layui-footer">-->
+                    <!--&lt;!&ndash; 底部固定区域 &ndash;&gt;-->
+                    <!--© www.xiaoi.com - 贵州小爱机器人科技有限公司-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" th:src="@{/plugins/layui/layui.all.js}"></script>
+<script type="text/javascript" th:src="@{/js/faq/user/user.index.js}"></script>
+</body>
+</html>
