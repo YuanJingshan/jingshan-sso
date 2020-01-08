@@ -1,14 +1,14 @@
 package com.up.jingshan.client.auth.user.mapper;
 
 
-import com.up.jingshan.sso.mybatis.model.Role;
+import com.up.jingshan.client.auth.user.model.Role;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description RoleMapper
  * @date 2019/12/19
  */

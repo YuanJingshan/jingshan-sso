@@ -56,7 +56,7 @@ spring:
         max-idle: 10
         min-idle: 5
       max-total: 20
-    host: 127.fontawesome.fontawesome.1
+    host: 127.0.0.1
     password: 123456
     port: 6379
 

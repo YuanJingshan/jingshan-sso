@@ -1,13 +1,13 @@
 package com.up.jingshan.client.auth.user.mapper;
 
-import com.up.jingshan.sso.mybatis.model.User;
+import com.up.jingshan.client.auth.user.model.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description UserMapper
  * @date 2019/12/19
  */

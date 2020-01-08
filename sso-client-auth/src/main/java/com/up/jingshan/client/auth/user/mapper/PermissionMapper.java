@@ -1,13 +1,13 @@
 package com.up.jingshan.client.auth.user.mapper;
 
-import com.up.jingshan.sso.mybatis.model.Permission;
+import com.up.jingshan.client.auth.user.model.Permission;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description PermissionMapper
  * @date 2019/12/19
  */
@@ -22,4 +22,6 @@ public interface PermissionMapper {
     List<Permission> selectAll();
 
     int updateByPrimaryKey(Permission record);
+
+    List<Permission> selectChildrens(Integer id);
 }

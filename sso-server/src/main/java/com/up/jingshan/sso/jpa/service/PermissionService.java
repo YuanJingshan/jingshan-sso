@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 权限接口
  * @date 2019/12/19
  */

@@ -1,26 +1,31 @@
 package com.up.jingshan.client.auth.user.service.impl;
 
+import com.up.jingshan.client.auth.user.mapper.UserMapper;
+import com.up.jingshan.client.auth.user.model.User;
 import com.up.jingshan.client.auth.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 用户信息服务-实现
  * @date Create in 2018/11/28 17:46
  */
-@Service(value = "userService")
+@Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
-//    @Autowired
-//    private UserDAO userDAO;
-//
-//    @Override
-//    public User findByUserName(String userName) {
-//        return userDAO.findByUserName(userName);
-//    }
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+//    @Cacheable(value = "user", key = "#userName")
+    public User findByUserName(String userName) {
+        return userMapper.selectByUsername(userName);
+    }
 //
 //    @Override
 //    public User findByID(String id) {

@@ -5,11 +5,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 权限服务
  * @date Create in 2018/11/28 13:09
  */
-@Service(value = "permissionService")
+@Service
 public class PermissionServiceImpl implements PermissionService {
 
 //    @Autowired

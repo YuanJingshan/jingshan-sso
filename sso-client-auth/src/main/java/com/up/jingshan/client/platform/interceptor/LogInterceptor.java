@@ -1,10 +1,10 @@
-package com.up.jingshan.client.interceptor;
+package com.up.jingshan.client.platform.interceptor;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.up.jingshan.client.platform.log.dao.LogDAO;
-import com.up.jingshan.client.platform.log.entity.Log;
-import com.up.jingshan.client.platform.log.util.LoggerUtil;
+import com.up.jingshan.client.auth.auditlog.mapper.AuditLogMapper;
+import com.up.jingshan.client.auth.auditlog.model.AuditLog;
+import com.up.jingshan.client.auth.auditlog.util.LogUtil;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,7 +16,7 @@ import java.util.Date;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 日志拦截器
  * @date 2019/8/29
  */
@@ -37,12 +37,11 @@ public class LogInterceptor implements HandlerInterceptor {
      * @param response 响应对象
      * @param o
      * @return
-     * @throws Exception
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) {
         //创建日志实体
-        Log logger = new Log();
+        AuditLog auditLog = new AuditLog();
         //获取请求sessionId
         String sessionId = request.getRequestedSessionId();
         //请求路径
@@ -52,32 +51,32 @@ public class LogInterceptor implements HandlerInterceptor {
                 SerializerFeature.DisableCircularReferenceDetect,
                 SerializerFeature.WriteMapNullValue);
         //设置客户端ip
-        logger.setClientIp(LoggerUtil.getCliectIp(request));
+        auditLog.setReqClientIp(LogUtil.getCliectIp(request));
         //设置请求方法
-        logger.setMethod(request.getMethod());
+        auditLog.setReqMethod(request.getMethod());
         //设置请求类型（json|普通请求）
-        logger.setType(LoggerUtil.getRequestType(request));
+        auditLog.setReqType(LogUtil.getRequestType(request));
         //设置请求参数内容json字符串
-        logger.setParamData(paramData);
+        auditLog.setReqParamData(paramData);
         //设置请求地址
-        logger.setUri(url);
+        auditLog.setReqUri(url);
         //设置sessionId
-        logger.setSessionId(sessionId);
-        logger.setReqTime(new Date());
+        auditLog.setSessionId(sessionId);
+        auditLog.setReqTime(new Date());
         //设置请求开始时间
         request.setAttribute(LOGGER_SEND_TIME, System.currentTimeMillis());
         //设置请求实体到request内，方面afterCompletion方法调用
-        request.setAttribute(LOGGER_ENTITY, logger);
+        request.setAttribute(LOGGER_ENTITY, auditLog);
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) {
 
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object o, Exception e) {
         //获取请求错误码
         int status = response.getStatus();
         //当前时间
@@ -85,20 +84,20 @@ public class LogInterceptor implements HandlerInterceptor {
         //请求开始时间
         long time = Long.valueOf(request.getAttribute(LOGGER_SEND_TIME).toString());
         //获取本次请求日志实体
-        Log loggerEntity = (Log) request.getAttribute(LOGGER_ENTITY);
+        AuditLog auditLog = (AuditLog) request.getAttribute(LOGGER_ENTITY);
         //设置请求时间差
-        loggerEntity.setTimeConsuming(Integer.valueOf((currentTime - time) + ""));
+        auditLog.setTimeConsuming(Integer.valueOf((currentTime - time) + ""));
         //设置返回时间
-        loggerEntity.setReturnTime(new Date());
+        auditLog.setReturnTime(new Date());
         //设置返回错误码
-        loggerEntity.setHttpStatusCode(status + "");
+        auditLog.setHttpStatusCode(status + "");
         //设置返回值
-        loggerEntity.setReturnData(JSON.toJSONString(request.getAttribute(LoggerUtil.LOGGER_RETURN),
+        auditLog.setReturnData(JSON.toJSONString(request.getAttribute(LogUtil.LOGGER_RETURN),
                 SerializerFeature.DisableCircularReferenceDetect,
                 SerializerFeature.WriteMapNullValue));
         //执行将日志写入数据库
-        LogDAO loggerDAO = getDAO(LogDAO.class, request);
-        loggerDAO.save(loggerEntity);
+        AuditLogMapper auditLogMapper = getMapper(AuditLogMapper.class, request);
+        auditLogMapper.insert(auditLog);
     }
 
     /**
@@ -109,7 +108,7 @@ public class LogInterceptor implements HandlerInterceptor {
      * @param <T>
      * @return
      */
-    private <T> T getDAO(Class<T> clazz, HttpServletRequest request) {
+    private <T> T getMapper(Class<T> clazz, HttpServletRequest request) {
         BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext());
         return factory.getBean(clazz);
     }

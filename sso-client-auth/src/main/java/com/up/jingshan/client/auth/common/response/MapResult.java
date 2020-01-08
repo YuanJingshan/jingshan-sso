@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  * @author seven.mu
- * @version 1.fontawesome
+ * @version 1.0
  * @description Map返回
  * @date 2019/8/29
  */

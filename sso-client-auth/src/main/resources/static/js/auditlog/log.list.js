@@ -4,16 +4,16 @@ $(function () {
         //获取数据
         table.render({
             elem: '#table',
-            url: '/faq/auditlog/list',
+            url: 'log/list',
             page: true,
             method: 'post',
             cols: [[
                 {field: 'id', title: 'ID', sort: true, fixed: 'left'},
-                {field: 'clientIp', title: '客户端IP'},
-                {field: 'uri', title: '请求路径'},
-                {field: 'type', title: '请求类型'},
-                {field: 'method', title: '请求方式'},
-                {field: 'paramData', title: '请求参数'},
+                {field: 'reqClientIp', title: '客户端IP'},
+                {field: 'reqUri', title: '请求路径'},
+                {field: 'reqType', title: '请求类型'},
+                {field: 'reqMethod', title: '请求方式'},
+                {field: 'reqParamData', title: '请求参数'},
                 {
                     field: 'reqTime', title: '请求时间',
                     templet: function (d) {
@@ -45,7 +45,7 @@ $(function () {
                     $.ajax({
                         type: "get",
                         async: false,
-                        url: "/faq/auditlog/delete/" + data.id,
+                        url: "log/delete/" + data.id,
                         success: function (res) {
                             if ($.constants.CODE_SUCCESS == res.code) {
                                 layer.msg("删除成功!");

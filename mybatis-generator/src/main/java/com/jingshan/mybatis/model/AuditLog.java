@@ -18,7 +18,7 @@ public class AuditLog implements Serializable {
 
     private Date reqTime;
 
-    private Date returmTime;
+    private Date returnTime;
 
     private String httpStatusCode;
 
@@ -86,12 +86,12 @@ public class AuditLog implements Serializable {
         this.reqTime = reqTime;
     }
 
-    public Date getReturmTime() {
-        return returmTime;
+    public Date getReturnTime() {
+        return returnTime;
     }
 
-    public void setReturmTime(Date returmTime) {
-        this.returmTime = returmTime;
+    public void setReturnTime(Date returnTime) {
+        this.returnTime = returnTime;
     }
 
     public String getHttpStatusCode() {
@@ -139,7 +139,7 @@ public class AuditLog implements Serializable {
         sb.append(", reqMethod=").append(reqMethod);
         sb.append(", sessionId=").append(sessionId);
         sb.append(", reqTime=").append(reqTime);
-        sb.append(", returmTime=").append(returmTime);
+        sb.append(", returnTime=").append(returnTime);
         sb.append(", httpStatusCode=").append(httpStatusCode);
         sb.append(", timeConsuming=").append(timeConsuming);
         sb.append(", reqParamData=").append(reqParamData);

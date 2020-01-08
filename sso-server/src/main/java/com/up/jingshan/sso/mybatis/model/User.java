@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 用户
  * @date 2019/12/19
  */
@@ -48,10 +48,11 @@ public class User implements UserDetails, Serializable {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
-            List<Permission> permissions = role.getPermissions();
-            for (Permission permission: permissions) {
-                authorities.add(new SimpleGrantedAuthority(permission.getCode()));
-            }
+            authorities.add(new SimpleGrantedAuthority(role.getRoleCode()));
+//            List<Permission> permissions = role.getPermissions();
+//            for (Permission permission: permissions) {
+//                authorities.add(new SimpleGrantedAuthority(permission.getCode()));
+//            }
         }
         return authorities;
     }

@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description jpa用户详细服务
  * @date 2019/12/19
  */

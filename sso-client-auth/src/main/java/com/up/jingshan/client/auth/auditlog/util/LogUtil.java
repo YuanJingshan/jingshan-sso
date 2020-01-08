@@ -1,18 +1,15 @@
-package com.up.jingshan.client.platform.log.util;
+package com.up.jingshan.client.auth.auditlog.util;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author jingshan
- * @version 1.fontawesome
- * @description  日志工具类
+ * @version 1.0
+ * @description 日志工具类
  * @date 2019/5/22
  */
-public final class LoggerUtil {
+public class LogUtil {
     public static final String LOGGER_RETURN = "_logger_return";
-
-    private LoggerUtil() {
-    }
 
     /**
      * 获取客户端ip地址

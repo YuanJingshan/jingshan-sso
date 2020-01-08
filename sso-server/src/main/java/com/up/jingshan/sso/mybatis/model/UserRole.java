@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 用户角色关系
  * @date 2019/12/19
  */

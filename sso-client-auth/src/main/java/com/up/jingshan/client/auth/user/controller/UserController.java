@@ -1,17 +1,26 @@
 package com.up.jingshan.client.auth.user.controller;
 
+import com.up.jingshan.client.auth.common.Constants;
+import com.up.jingshan.client.auth.common.utils.DateUtil;
+import com.up.jingshan.client.auth.user.model.Permission;
+import com.up.jingshan.client.auth.user.model.Role;
+import com.up.jingshan.client.auth.user.model.User;
 import com.up.jingshan.client.auth.user.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.*;
+
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 管理系统用户业务逻辑
  * @date Create in 2018/11/28 13:13
  */
@@ -27,6 +36,7 @@ public class UserController {
     private final String USER_PWD = "faq/user/user_pwd";
 
     @Autowired
+    @Qualifier(value = "userServiceImpl")
     private UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -35,19 +45,30 @@ public class UserController {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(Authentication authentication, Model model) {
+    public String index(Authentication authentication, HttpServletRequest request, Model model) {
         String userName = authentication.getName();
-//        User user = userService.findByUserName(userName);
-//        Set<Permission> permissions = user.getRole().getPermissions();
-//        model.addAttribute("admin", user);
-//        model.addAttribute("permissions", permissions);
+        User user = userService.findByUserName(userName);
+        List<Permission> menus = new ArrayList<>();
+        for (Role role : user.getRoles()) {
+            List<Permission> permissions = role.getPermissions();
+            for (Permission permission: permissions) {
+                if (Constants.RESOUCE_TYPE_MENU == permission.getType()) {
+                    menus.add(permission);
+                }
+            }
+        }
+        Collections.sort(menus);
+        request.getSession().setAttribute("admin", user);
+        request.getSession().setAttribute("version", DateUtil.formatDate(new Date(), DateUtil.DATE_FMT_YMDHMS));
+        model.addAttribute("menus", menus);
+
         return INDEX_URL;
     }
 
-//    @RequestMapping(value = "faq/home", method = RequestMethod.GET)
-//    public String home() {
-//        return MANAGE_HOME_URL;
-//    }
+    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    public String home() {
+        return MANAGE_HOME_URL;
+    }
 //
 //    @RequestMapping(value = "faq/login", method = RequestMethod.GET)
 //    public String tologin() {
@@ -137,7 +158,7 @@ public class UserController {
 //                    return new MapResult().error("修改失败");
 //                }
 //                //修改自己，刷新session
-//                if ("fontawesome".equals(user.getMine())) {
+//                if ("0".equals(user.getMine())) {
 //                    HttpSession session = request.getSession();
 //                    session.setAttribute("loginUser", user);
 //                }

@@ -17,9 +17,9 @@ public class CustomerErrorPageRegistrar implements ErrorPageRegistrar {
 
     @Override
     public void registerErrorPages(ErrorPageRegistry errorPageRegistry) {
-        ErrorPage e403 = new ErrorPage(HttpStatus.FORBIDDEN, "/static/403.html");
-        ErrorPage e404 = new ErrorPage(HttpStatus.NOT_FOUND, "/static/404.html");
-        ErrorPage e500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/static/500.html");
+        ErrorPage e403 = new ErrorPage(HttpStatus.FORBIDDEN, "/403.html");
+        ErrorPage e404 = new ErrorPage(HttpStatus.NOT_FOUND, "/404.html");
+        ErrorPage e500 = new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500.html");
         errorPageRegistry.addErrorPages(e403, e404, e500);
     }
 }

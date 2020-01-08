@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description UserDetailsService
  * @date 2019/12/19
  */

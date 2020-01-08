@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.up.jingshan.sso.mybatis.mapper.UserRoleMapper">
-    <resultMap id="BaseResultMap" type="com.up.jingshan.sso.mybatis.model.UserRole">
+<mapper namespace="com.up.jingshan.client.auth.user.mapper.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.up.jingshan.client.auth.user.model.UserRole">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="user_id" jdbcType="INTEGER" property="userId"/>
         <result column="role_id" jdbcType="INTEGER" property="roleId"/>
@@ -12,7 +12,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.up.jingshan.sso.mybatis.model.UserRole">
+    <insert id="insert" parameterType="com.up.jingshan.client.auth.user.model.UserRole">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -20,7 +20,7 @@
         values (#{userId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER})
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.up.jingshan.sso.mybatis.model.UserRole">
+    <update id="updateByPrimaryKey" parameterType="com.up.jingshan.client.auth.user.model.UserRole">
         update sys_user_role
         set user_id = #{userId,jdbcType=INTEGER},
             role_id = #{roleId,jdbcType=INTEGER}
@@ -45,7 +45,7 @@
     </select>
 
     <!-- 根据用户查询角色 -->
-    <resultMap id="RoleResultMap" type="com.up.jingshan.sso.mybatis.model.Role">
+    <resultMap id="RoleResultMap" type="com.up.jingshan.client.auth.user.model.Role">
         <result column="id" jdbcType="INTEGER" property="id" />
         <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
         <result column="role_code" jdbcType="VARCHAR" property="roleCode"/>
@@ -62,7 +62,7 @@
     </select>
 
     <!-- 根据角色查询用户 -->
-    <resultMap id="UserResultMap" type="com.up.jingshan.sso.mybatis.model.User">
+    <resultMap id="UserResultMap" type="com.up.jingshan.client.auth.user.model.User">
         <result column="id" jdbcType="INTEGER" property="id" />
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>

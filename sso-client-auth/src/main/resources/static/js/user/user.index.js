@@ -24,7 +24,7 @@ layui.use('element', function () {
             url = url + "?s=" + new Date().getTime();
             element.tabAdd('demo', {
                 title: name,
-                content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="fontawesome" src="' + url + '" style="width:100%;height:100%;"></iframe>',
+                content: '<iframe data-frameid="' + id + '" scrolling="auto" frameborder="0" src="' + url + '" style="width:100%;height:100%;"></iframe>',
                 id: id //规定好的id
             })
         },
@@ -96,9 +96,9 @@ layui.use('element', function () {
             content: url
         });
     });
-    var menu_i = $("div .layui-side-scroll").find("i");
-    for (var i = 0; i < menu_i.length; i++) {
-        var icon = $(menu_i[i]).attr("html") + "&nbsp;";
-        $(menu_i[i]).html(icon);
-    }
+    // var menu_i = $("div .layui-side-scroll").find("i");
+    // for (var i = 0; i < menu_i.length; i++) {
+    //     var icon = $(menu_i[i]).attr("html") + "&nbsp;";
+    //     $(menu_i[i]).html(icon);
+    // }
 });

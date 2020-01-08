@@ -4,15 +4,16 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 权限
  * @date 2019/12/19
  */
 @Data
-public class Permission implements Serializable {
+public class Permission implements Serializable, Comparable<Permission>{
     private Integer id;
 
     private Integer pid;
@@ -22,6 +23,8 @@ public class Permission implements Serializable {
     private String name;
 
     private String code;
+
+    private String icon;
 
     private String uri;
 
@@ -37,6 +40,8 @@ public class Permission implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private List<Permission> childrens;
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -48,6 +53,7 @@ public class Permission implements Serializable {
         sb.append(", type=").append(type);
         sb.append(", name=").append(name);
         sb.append(", code=").append(code);
+        sb.append(", icon=").append(icon);
         sb.append(", uri=").append(uri);
         sb.append(", seq=").append(seq);
         sb.append(", createUser=").append(createUser);
@@ -57,5 +63,10 @@ public class Permission implements Serializable {
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public int compareTo(Permission o) {
+        return this.seq.compareTo(o.getSeq());
     }
 }

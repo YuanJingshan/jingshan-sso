@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.up.jingshan.sso.mybatis.mapper.UserMapper">
-    <resultMap id="BaseResultMap" type="com.up.jingshan.sso.mybatis.model.User">
+<mapper namespace="com.up.jingshan.client.auth.user.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="com.up.jingshan.client.auth.user.model.User">
         <id column="id" jdbcType="INTEGER" property="id"/>
         <result column="username" jdbcType="VARCHAR" property="username"/>
         <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -13,12 +13,12 @@
         <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <collection property="roles" column="id"
-                    ofType="com.up.jingshan.sso.mybatis.mapper.RoleMapper.BaseResultMap"
-                    select="com.up.jingshan.sso.mybatis.mapper.UserRoleMapper.selectRoleByUserId" />
+                    ofType="com.up.jingshan.client.auth.user.mapper.RoleMapper.BaseResultMap"
+                    select="com.up.jingshan.client.auth.user.mapper.UserRoleMapper.selectRoleByUserId" />
     </resultMap>
 
-    <resultMap id="UserRolePermissionResultMap" type="com.up.jingshan.sso.mybatis.model.User" extends="BaseResultMap">
-        <collection property="roles" ofType="com.up.jingshan.sso.mybatis.model.Role">
+    <resultMap id="UserRolePermissionResultMap" type="com.up.jingshan.client.auth.user.model.User" extends="BaseResultMap">
+        <collection property="roles" ofType="com.up.jingshan.client.auth.user.model.Role">
             <id column="r_id" jdbcType="INTEGER" property="id"/>
             <result column="r_roleName" jdbcType="VARCHAR" property="roleName"/>
             <result column="r_roleCode" jdbcType="VARCHAR" property="roleCode"/>
@@ -27,12 +27,13 @@
             <result column="r_createTime" jdbcType="TIMESTAMP" property="createTime"/>
             <result column="r_updateUser" jdbcType="VARCHAR" property="updateUser"/>
             <result column="r_updateTime" jdbcType="TIMESTAMP" property="updateTime"/>
-            <collection property="permissions" ofType="com.up.jingshan.sso.mybatis.model.Permission">
+            <collection property="permissions" ofType="com.up.jingshan.client.auth.user.model.Permission">
                 <id column="p_id" jdbcType="INTEGER" property="id"/>
                 <result column="p_pid" jdbcType="INTEGER" property="pid"/>
                 <result column="p_type" jdbcType="TINYINT" property="type"/>
                 <result column="p_name" jdbcType="VARCHAR" property="name"/>
                 <result column="p_code" jdbcType="VARCHAR" property="code"/>
+                <result column="p_icon" jdbcType="VARCHAR" property="icon"/>
                 <result column="p_uri" jdbcType="VARCHAR" property="uri"/>
                 <result column="p_seq" jdbcType="INTEGER" property="seq"/>
                 <result column="p_createUser" jdbcType="VARCHAR" property="createUser"/>
@@ -47,7 +48,7 @@
         select u.id, u.username, u.password, u.nickname, u.email, u.status, u.create_user, u.create_time, u.update_user, u.update_time,
           r.id as r_id, r.role_name as r_roleName, r.role_code as r_roleCode, r.role_description as r_roleDescription,
           r.create_user as r_createUser, r.create_time as r_createTime, r.update_user as r_updateUser, r.update_time as r_updateTime ,
-          p.id as p_id, p.pid as p_pid, p.type as p_type, p.name as p_name, p.code as p_code, p.uri as p_uri,
+          p.id as p_id, p.pid as p_pid, p.type as p_type, p.name as p_name, p.code as p_code, p.icon as p_icon, p.uri as p_uri,
           p.seq as p_seq, p.create_user as p_createUser, p.create_time as p_createTime, p.update_user as p_updateUser, p.update_time as p_updateTime
         from sys_user u
             left join sys_user_role ur on u.id = ur.user_id
@@ -62,7 +63,7 @@
         where id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <insert id="insert" parameterType="com.up.jingshan.sso.mybatis.model.User">
+    <insert id="insert" parameterType="com.up.jingshan.client.auth.user.model.User">
         <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -76,7 +77,7 @@
         )
     </insert>
 
-    <update id="updateByPrimaryKey" parameterType="com.up.jingshan.sso.mybatis.model.User">
+    <update id="updateByPrimaryKey" parameterType="com.up.jingshan.client.auth.user.model.User">
         update sys_user
         set username    = #{username,jdbcType=VARCHAR},
             `password`  = #{password,jdbcType=VARCHAR},

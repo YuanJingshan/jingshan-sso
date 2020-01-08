@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 应用入口
  * @date Create in 2018/10/31 9:18
  */

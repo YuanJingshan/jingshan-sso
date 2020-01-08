@@ -36,12 +36,12 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description httpClient公共类，用于通过http请求调用外部接口
  * @date Create in 2018/12/17 12:22
  */
 @Slf4j
-public class HttpUtils {
+public class HttpUtil {
 
     public static final String URL_ENCODE = "UTF-8";
     public static final String CONTENT_TYPE = "application/json";
@@ -143,11 +143,11 @@ public class HttpUtils {
                 }
             } else {
                 httpGet.abort();
-                log.info("HttpUtils get statusCode: {} url: {}", response.getStatusLine().getStatusCode(), url);
+                log.info("HttpUtil get statusCode: {} url: {}", response.getStatusLine().getStatusCode(), url);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("HttpUtils request fail! url: {}", url);
+            log.error("HttpUtil request fail! url: {}", url);
             throw e;
         } finally {
             if (response != null) {
@@ -187,11 +187,11 @@ public class HttpUtils {
                 }
             } else {
                 httpPost.abort();
-                log.info("HttpUtils post statusCode: {} url: {}", response.getStatusLine().getStatusCode(), url);
+                log.info("HttpUtil post statusCode: {} url: {}", response.getStatusLine().getStatusCode(), url);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("HttpUtils request fail! url: {}, params: {}", url, jsonStr, e);
+            log.error("HttpUtil request fail! url: {}, params: {}", url, jsonStr, e);
             throw e;
         } finally {
             if (response != null) {
@@ -229,11 +229,11 @@ public class HttpUtils {
                 }
             } else {
                 httpPost.abort();
-                log.info("HttpUtils post statusCode: {} url: {}", response.getStatusLine().getStatusCode(), url);
+                log.info("HttpUtil post statusCode: {} url: {}", response.getStatusLine().getStatusCode(), url);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("HttpUtils request fail! url: {}, params: {}", url, null, e);
+            log.error("HttpUtil request fail! url: {}, params: {}", url, null, e);
             throw e;
         }
         return result;
@@ -246,7 +246,7 @@ public class HttpUtils {
         jsonMap.put("dzyj", "");
         // 固定电话
         jsonMap.put("gddh", "");
-        // 公开标志 1： 公开，  fontawesome ：不公开
+        // 公开标志 1： 公开，  0 ：不公开
         jsonMap.put("gkbz", "1");
         // 获取地址：http://218.2.26.138:18080/gzszfjk_webservice/Service.asmx/sjld_nrfl?parentid=0
         // 内容分类代码 该代码表示其它
@@ -300,7 +300,7 @@ public class HttpUtils {
         String param = params.toString();
 
         try {
-            String res = HttpUtils.postForm(url, params);
+            String res = HttpUtil.postForm(url, params);
             Map<String, Object> responseMap = JSONObject.parseObject(res);
             System.out.print(responseMap.toString());
         } catch (Exception e) {

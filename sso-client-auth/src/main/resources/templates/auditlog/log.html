@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>FAQ检索系统</title>
-    <link rel="stylesheet" th:href="@{/static/plugins/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/plugins/layui/css/layui.css}">
 </head>
 <body class="layui-card-body">
 <div class="header layui-row" style="text-align: right;">
@@ -26,9 +26,9 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
-<script th:src="@{/static/js/jquery-3.2.1.min.js}"></script>
-<script th:src="@{/static/plugins/layui/layui.all.js}"></script>
-<script th:src="@{/static/js/common.js}"></script>
-<script th:src="@{/static/js/auditlog/log.list.js}"></script>
+<script th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/plugins/layui/layui.all.js}"></script>
+<script th:src="@{'/js/common.js?' + ${session.version}}"></script>
+<script th:src="@{'/js/auditlog/log.list.js?' + ${session.version}}"></script>
 </body>
 </html>

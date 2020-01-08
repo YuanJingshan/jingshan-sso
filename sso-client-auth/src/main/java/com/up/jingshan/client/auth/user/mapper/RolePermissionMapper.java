@@ -1,15 +1,15 @@
 package com.up.jingshan.client.auth.user.mapper;
 
 
-import com.up.jingshan.sso.mybatis.model.Permission;
-import com.up.jingshan.sso.mybatis.model.RolePermission;
+import com.up.jingshan.client.auth.user.model.Permission;
+import com.up.jingshan.client.auth.user.model.RolePermission;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description RolePermissionMapper
  * @date 2019/12/19
  */

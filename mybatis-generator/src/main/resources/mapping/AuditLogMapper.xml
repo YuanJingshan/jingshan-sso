@@ -9,6 +9,63 @@
     <result column="req_method" jdbcType="VARCHAR" property="reqMethod" />
     <result column="session_id" jdbcType="VARCHAR" property="sessionId" />
     <result column="req_time" jdbcType="TIMESTAMP" property="reqTime" />
+    <result column="return_time" jdbcType="TIMESTAMP" property="returnTime" />
+    <result column="http_status_code" jdbcType="VARCHAR" property="httpStatusCode" />
+    <result column="time_consuming" jdbcType="INTEGER" property="timeConsuming" />
+    <result column="req_param_data" jdbcType="LONGVARCHAR" property="reqParamData" />
+    <result column="return_data" jdbcType="LONGVARCHAR" property="returnData" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_audit_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jingshan.mybatis.model.AuditLog">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_audit_log (req_client_ip, req_uri, req_type, 
+      req_method, session_id, req_time, 
+      return_time, http_status_code, time_consuming, 
+      req_param_data, return_data)
+    values (#{reqClientIp,jdbcType=VARCHAR}, #{reqUri,jdbcType=VARCHAR}, #{reqType,jdbcType=VARCHAR}, 
+      #{reqMethod,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}, #{reqTime,jdbcType=TIMESTAMP}, 
+      #{returnTime,jdbcType=TIMESTAMP}, #{httpStatusCode,jdbcType=VARCHAR}, #{timeConsuming,jdbcType=INTEGER}, 
+      #{reqParamData,jdbcType=LONGVARCHAR}, #{returnData,jdbcType=LONGVARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.jingshan.mybatis.model.AuditLog">
+    update sys_audit_log
+    set req_client_ip = #{reqClientIp,jdbcType=VARCHAR},
+      req_uri = #{reqUri,jdbcType=VARCHAR},
+      req_type = #{reqType,jdbcType=VARCHAR},
+      req_method = #{reqMethod,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR},
+      req_time = #{reqTime,jdbcType=TIMESTAMP},
+      return_time = #{returnTime,jdbcType=TIMESTAMP},
+      http_status_code = #{httpStatusCode,jdbcType=VARCHAR},
+      time_consuming = #{timeConsuming,jdbcType=INTEGER},
+      req_param_data = #{reqParamData,jdbcType=LONGVARCHAR},
+      return_data = #{returnData,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, req_client_ip, req_uri, req_type, req_method, session_id, req_time, return_time, 
+    http_status_code, time_consuming, req_param_data, return_data
+    from sys_audit_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, req_client_ip, req_uri, req_type, req_method, session_id, req_time, return_time, 
+    http_status_code, time_consuming, req_param_data, return_data
+    from sys_audit_log
+  </select>
+  <resultMap id="BaseResultMap" type="com.jingshan.mybatis.model.AuditLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="req_client_ip" jdbcType="VARCHAR" property="reqClientIp" />
+    <result column="req_uri" jdbcType="VARCHAR" property="reqUri" />
+    <result column="req_type" jdbcType="VARCHAR" property="reqType" />
+    <result column="req_method" jdbcType="VARCHAR" property="reqMethod" />
+    <result column="session_id" jdbcType="VARCHAR" property="sessionId" />
+    <result column="req_time" jdbcType="TIMESTAMP" property="reqTime" />
     <result column="returm_time" jdbcType="TIMESTAMP" property="returmTime" />
     <result column="http_status_code" jdbcType="VARCHAR" property="httpStatusCode" />
     <result column="time_consuming" jdbcType="INTEGER" property="timeConsuming" />

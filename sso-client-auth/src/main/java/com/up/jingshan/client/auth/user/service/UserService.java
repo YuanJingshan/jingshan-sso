@@ -1,20 +1,22 @@
 package com.up.jingshan.client.auth.user.service;
 
+import com.up.jingshan.client.auth.user.model.User;
+
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description 用户信息服务
  * @date Create in 2018/11/28 17:45
  */
 public interface UserService {
 
-//    /**
-//     * 根据用户名查用户
-//     *
-//     * @param userName
-//     * @return
-//     */
-//    User findByUserName(String userName);
+    /**
+     * 根据用户名查用户
+     *
+     * @param userName
+     * @return
+     */
+    User findByUserName(String userName);
 //
 //    /**
 //     * 根据ID查询用户

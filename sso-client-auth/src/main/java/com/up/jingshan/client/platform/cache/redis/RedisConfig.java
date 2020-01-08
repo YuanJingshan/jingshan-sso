@@ -23,7 +23,7 @@ import java.time.Duration;
 
 /**
  * @author YuanJingshan
- * @version 1.fontawesome
+ * @version 1.0
  * @description redis 配置类
  * @date 2020/1/3
  */
